@@ -21,7 +21,7 @@ Clase 01 - PIII 2016
 	- Puertos de entrada, Conversor A/D, muestreo
 	- Puertos de salida, Conversor D/A
 	- Generador de señales, FFT, Filtros
-:Ideas para trabajo práctico final:
+:Ideas para trabajo final:
 	- Control a distancia por tonos DTMF  (Dual-Tone Multi-Frequency) 
 	- Efectos para instrumentos musicales
 	- Distorsión de la voz en tiempo real para hablar sin ser reconocido
@@ -90,7 +90,7 @@ Softwares
 *mikroC para dsPIC*
 	- Compilador C para dsPIC
 	- Incluye bibliotecas de programación
-	- Última versión 6.2 (febrero 2014)
+	- Última versión 6.2 
 	- Desarrollado por MikroElektronika ( http://www.mikroe.com/mikroc/dspic )
 	- MikroElektronika también dispone de placas de desarrollo como la Easy dsPIC que disponemos en el Lab
 	
