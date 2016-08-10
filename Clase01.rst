@@ -9,8 +9,13 @@ Clase 01 - PIII 2016
 :Correo: cosimani@ubp.edu.ar
 :Fecha: 10 de agosto de 2016
 :Regularidad: 
-	- 2 prácticos parciales (que pueden ser avances del trabajo final)
-  	- Individual o 2 alumnos 
+	- 2 prácticos parciales (que pueden ser avances del proyecto final)
+  	
+	- Proyecto final: Individual o 2 alumnos 
+	
+	- Deadline para entregar el resumen (idea) del proyecto final: Una semana antes del 1er parcial
+	
+	- Entregar la idea antes del Deadline evita realizar los parciales
 :Final:
 	- Entrega de un trabajo integrador.
 :Temas principales: 
