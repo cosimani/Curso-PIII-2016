@@ -2,17 +2,17 @@
 
 .. _rcs_subversion:
 
-Clase 01 - PIII 2015
+Clase 01 - PIII 2016 
 ====================
 
 :Autor: César Osimani
 :Correo: cosimani@ubp.edu.ar
-:Fecha: 7 de agosto de 2015
+:Fecha: 10 de agosto de 2016
 :Regularidad: 
 	- 2 prácticos parciales (que pueden ser avances del trabajo final)
-  	- Individual o Grupos de 2 o 3 alumnos
+  	- Individual o 2 alumnos 
 :Final:
-	- Entrega de un trabajo práctico integrador.
+	- Entrega de un trabajo integrador.
 :Temas principales: 
   	- Arquitectura de los DSP (Digital Signal Processor)
 	- Programación en C de los dsPIC30F y dsPIC33F
@@ -23,9 +23,8 @@ Clase 01 - PIII 2015
 	- Generador de señales, FFT, Filtros
 :Ideas para trabajo práctico final:
 	- Control a distancia por tonos DTMF  (Dual-Tone Multi-Frequency) 
-	- Efectos para guitarra eléctrica
+	- Efectos para instrumentos musicales
 	- Distorsión de la voz en tiempo real para hablar sin ser reconocido
-	- Distorsión de la voz como un juego. Ver Pou para Android. 
 	- Poder insertar la voz en un archivo de audio WAV en otra portadora. Crear un dsPIC como codec.
 	- dsPIC conectado a la PC por puerto serie USB
 	- Afinador de instrumentos

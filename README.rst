@@ -7,8 +7,7 @@ Destinado a los estudiantes de la carrera Ing. en Telecomunicaciones de la Unive
 :Profesor: Ing. César Osimani
 :Profesor: Ing. Martín Salamero
 :Asignatura: Programación III
-:Fecha: Agosto a noviembre de 2015
-
+:Fecha: Agosto a noviembre de 2016 
 
 Créditos
 --------
