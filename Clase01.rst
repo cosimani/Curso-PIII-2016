@@ -55,7 +55,6 @@ Familias de microcontroladores Microchip
 	- Controlador digital de señales
 	
 .. figure:: images/clase01/precio_rendimiento.png
-	:width: 180pt
 
 *dsPIC (Nombre que utiliza Microchip para referirse a sus DSC)*
 	- PIC de 16 bits (registros de 16 bits)
