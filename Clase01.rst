@@ -30,7 +30,6 @@ Clase 01 - PIII 2016
 	- Control a distancia por tonos DTMF  (Dual-Tone Multi-Frequency) 
 	- Efectos para instrumentos musicales
 	- Distorsión de la voz en tiempo real para hablar sin ser reconocido
-	- Poder insertar la voz en un archivo de audio WAV en otra portadora. Crear un dsPIC como codec.
 	- dsPIC conectado a la PC por puerto serie USB
 	- Afinador de instrumentos
 	- Ecualizador y eliminador de ruidos
