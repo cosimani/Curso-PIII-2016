@@ -54,7 +54,7 @@ Familias de microcontroladores Microchip
 	- Híbrido MCU/DSP
 	- Controlador digital de señales
 	
-.. image:: images/clase01/precio_rendimiento.png
+.. figure:: images/clase01/precio_rendimiento.png
 	:width: 180pt
 
 *dsPIC (Nombre que utiliza Microchip para referirse a sus DSC)*
