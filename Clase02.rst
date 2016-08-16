@@ -2,8 +2,9 @@
 
 .. _rcs_subversion:
 
-Clase 02 - PIII 2015
+Clase 02 - PIII 2016
 ====================
+
 
 Ejercicio 4 (clase pasada): Una opción para resolverlo.
 
@@ -167,4 +168,66 @@ El ejemplo muestra cómo el dsPIC reacciona a un flanco de señal ascendente en 
 - En la posición 0x000014 está la función deteccionDeInterrupcion , se ejecuta y vuelve al main.
 - Dentro de la función, el software debe poner a cero el bit menos significativo de IFS0. Si no, siempre pensará que hay interrupción.
 - Luego incrementamos en 1 LATD.
+
+	
+
+*Ejercicio 3*: Crear un programa "Hola mundo" para el dsPIC33FJ32MC202.
+	- Escribir una función void configuracionInicial() para configurar el puerto RB0 como salida
+	- En la función main encender y apagar un LED en RB0 cada 1 segundo
+
+	
+*Ejercicio 1*: Regulador de tensión para los dsPIC33F.
+	- Alimentación desde un conector USB.
+	- Utilizar herramientas de medición para asegurarse de los voltajes obtenidos.
+
+*Ejercicio 2*: Alimentar el dsPIC33FJ32MC202.
+	- Conectar el Master Clear
+	- Utilizar capacitores de desacoplo
+	- Conectar un cristal de cuarzo
+	- Grabarle un programa simple (ver ejercicio 3)
+
+
+*Ejercicio 4*: Programar en RB1 un segundo LED que encienda cada un determinado tiempo distinto al tiempo de RB0.
+	- El LED en RB0 que encienda y apague cada 250 ms
+	- El LED en RB1 que encienda y apague cada 133 ms
+
+
+**Proteus (primer proyecto)**
+
+- New Design
+- Component mode (panel izquierdo)
+- P (Pick Device) - permite seleccionar los componentes a utilizar en este proyecto
+	- DSPIC33FJ32MC202
+	- USBCONN
+	- LM317L
+	- A700 (es el prefijo de capacitores electrolíticos de alto valor)
+	- CAP-ELEC - Capacitores electrolíticos generales
+	- POT-HG - Potenciómetro
+	- RES - Resistencia
+	- LED-RED
+	- CRYSTAL
+- Terminals Mode - Permite agregar tierra, entrada, salida, etc.
+	- GROUND
+
+
+**Código ejemplo del Hola Mundo**
+
+.. code-block::
+
+	void main()  {
+  	    TRISBbits.TRISB0 = 0;            
+  	    LATBbits.LATB0 = 0;    
+
+  	    while(1) {
+    	        LATBbits.LATB0 = ~LATBbits.LATB0;       
+    	        Delay_ms(1000);
+  	    }
+	}
+
+
+**Regulador de tensión 3.3v (esto para los dsPIC33F)**
+
+.. figure:: images/clase01/regulador.png
+
+
 
