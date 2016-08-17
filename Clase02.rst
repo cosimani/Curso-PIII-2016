@@ -17,7 +17,8 @@ Clase 02 - PIII 2016
 - Cuando una interrupción es atendida, el PC (Program Counter) se carga con la dirección que indica la tabla de vector de interrupción (IVT)
    
 
-*Escribir una rutina del servicio de interrupción (ISR)*   
+**Escribir una rutina del servicio de interrupción (ISR)**
+
 - Función void sin parámetros
 - No puede ser invocada
 
