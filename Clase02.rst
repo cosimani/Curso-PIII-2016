@@ -13,16 +13,14 @@ Clase 02 - PIII 2016
 - Permite que una interrupción de mayor prioridad invalide una de menor prioridad que esté en progreso.
 - Existe una tabla de vectores de interrupción (IVT) que indica dónde escribir la función que atenderá dicha interrución.
 - También hay una tabla alternativa (AIVT) que se usa en situaciones de depuración o pruebas. 
+- Cuando una interrupción es atendida, el PC (Program Counter) se carga con la dirección que indica la tabla de vector de interrupción (IVT)
 
 .. figure:: images/clase02/ivt.png
    :target: http://ww1.microchip.com/downloads/en/DeviceDoc/70046E.pdf
    
 .. figure:: images/clase02/ivt_dspic33F.png
    :target: http://ww1.microchip.com/downloads/en/DeviceDoc/70214C.pdf
-   
-
-- Cuando una interrupción es atendida, el PC (Program Counter) se carga con la dirección que indica la tabla de vector de interrupción (IVT)
-   
+  
 
 **Escribir una rutina del servicio de interrupción (ISR)**
 
