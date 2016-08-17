@@ -109,6 +109,9 @@ Secuencia de interrupción
         }
     }
 
+*Ejercicio:* Conectar en RB0 y RB1 dos leds. Programar para que cada uno encienda en distintos tiempos. Por ejemplo:
+	- El LED en RB0 que encienda y apague cada 250 ms
+	- El LED en RB1 que encienda y apague cada 133 ms
 
 Ejercicio 4 (clase pasada): Una opción para resolverlo.
 
@@ -194,9 +197,6 @@ El ejemplo muestra cómo el dsPIC reacciona a un flanco de señal ascendente en 
 	- Grabarle un programa simple (ver ejercicio 3)
 
 
-*Ejercicio 4*: Programar en RB1 un segundo LED que encienda cada un determinado tiempo distinto al tiempo de RB0.
-	- El LED en RB0 que encienda y apague cada 250 ms
-	- El LED en RB1 que encienda y apague cada 133 ms
 
 
 **Proteus (primer proyecto)**
