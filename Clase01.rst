@@ -98,7 +98,7 @@ Softwares
 	- Desarrollado por MikroElektronika ( http://www.mikroe.com/mikroc/dspic )
 	- MikroElektronika también dispone de placas de desarrollo como la Easy dsPIC que disponemos en el Lab
 	
-*Ejercicio 1*: Crear un programa "Hola mundo" para el dsPIC30F4013.
+**Ejercicio**: Crear un programa "Hola mundo" para el dsPIC30F4013.
 	- Escribir una función void configuracionInicial() para configurar el puerto RB0 como salida
 	- En la función main encender y apagar un LED en RB0 cada 1 segundo
 	- Tener en cuenta que por defecto un nuevo proyecto en mikroC para el dsPIC30F4013 viene con XT w/PLL 8x
