@@ -109,7 +109,7 @@ Secuencia de interrupción
         }
     }
 
-*Ejercicio:* Conectar en RB0 y RB1 dos leds. Programar para que cada uno encienda en distintos tiempos. Por ejemplo:
+**Ejercicio:** Conectar en RB0 y RB1 dos leds. Programar para que cada uno encienda en distintos tiempos. Por ejemplo:
 
 - El LED en RB0 que encienda y apague cada 250 ms
 - El LED en RB1 que encienda y apague cada 133 ms
@@ -121,29 +121,29 @@ El ejemplo muestra cómo el dsPIC reacciona a un flanco de señal ascendente en 
 .. code-block::
 
 	void configInicial()  {
-		TRISD = 0;               // Contador de eventos por interrupción
-		TRISAbits.TRISA11 = 1;   // RA11 como entrada
-		INTCON2bits.INT0EP = 0;  // 0 para Ascendente y 1 para Descendente
+	    TRISD = 0;               // Contador de eventos por interrupción
+	    TRISAbits.TRISA11 = 1;   // RA11 como entrada
+	    INTCON2bits.INT0EP = 0;  // 0 para Ascendente y 1 para Descendente
 	}
 
 	void deteccionInt0() org 0x0014  {   // Interrupción en INT0
-		LATD++;	            // Incrementamos el contador
-		IFS0bits.INT0IF = 0;    // Decimos que ya atendimos la interrupción
+	    LATD++;	            // Incrementamos el contador
+	    IFS0bits.INT0IF = 0;    // Decimos que ya atendimos la interrupción
 	}
 
 	void main()  {
-		configInicial();
-		
-		IEC0bits.INT0IE = 1;     // Habilitamos la interrupcion externa 0
+	    configInicial();
 
-		while(1)
-			asm nop;
+	    IEC0bits.INT0IE = 1;     // Habilitamos la interrupcion externa 0
+
+	    while(1)
+	        asm nop;
 	}
 
-*La secuencia es la siguiente:*
+**Análisis de lo que sucede:**
 
 - Se utiliza el PORTD para mostrar el número de eventos de interrupción.
-- PORTF como entrada para producir una interrupción cuando en INT0 (RA11) cambie de cero a 1. 
+- Puerto RA11 como entrada para producir una interrupción cuando en INT0 cambie de cero a 1. 
 - En el registro IEC0, el bit menos significativo está en uno para interrumpir con INT0. 
 - Cuando se produce una interrupción, la función deteccionDeInterrupcion se invoca
 - Por la instrucción org en la tabla de vectores de interrupción se escribe la función en la posición de memoria 0x000014.
