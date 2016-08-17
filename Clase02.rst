@@ -65,9 +65,9 @@ Secuencia de interrupción
 .. code-block::
 
     void detectarInt0() org 0x0014  {
-								0x0014 - INT0  
-								0x0034 - INT1
-								0x0042 - INT2
+							// 0x0014 - INT0  
+							// 0x0034 - INT1
+							// 0x0042 - INT2
     }
 
 **Para elegir lanzar la interrupción con flanco ascendente o descendente hacemos:**
