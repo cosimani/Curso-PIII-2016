@@ -5,6 +5,15 @@
 Clase 02 - PIII 2016
 ====================
 
+**Interrupciones**
+
+- Eventos que hacen que el dsPIC deje de realizar lo que está haciendo y pase a ejecutar otra tarea.
+- Las causas pueden ser diferentes (Interrupciones externas, Timers, ADC, UART, etc.).
+- 7 niveles de prioridad (1 a 7 a través de los registros IPCx). Con 0 se desactiva la interrupción.
+- Permite que una interrupción de mayor prioridad invalide una de menor prioridad que esté en progreso.
+
+- Existe una table de vectores de interrupción (IVT) que indica dónde escribir la función que atenderá dicha interrución.
+
 .. figure:: images/clase02/interrupciones.png
 	
 .. figure:: images/clase02/ivt.png
@@ -51,7 +60,7 @@ Secuencia de interrupción
 +++++++++++++++++++++++++
 
 - Las banderas de interrupción se muestrean en el comienzo de cada ciclo de instrucción por los registros IFSx. 
-- Una solicitud de interrupción pendiente (IRQ) se indica mediante la bandera en '1' en un registro IFSx. 
+- Una solicitud de interrupción pendiente (IRQ: Interrupt Request) se indica mediante la bandera en '1' en un registro IFSx. 
 - La IRQ provoca una interrupción si se encuentra habilitado con IECx. 
 - El IVT contiene las direcciones iniciales de las rutinas de interrupción para cada fuente de interrupción.
 
