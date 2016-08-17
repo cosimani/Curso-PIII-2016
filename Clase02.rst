@@ -11,11 +11,9 @@ Clase 02 - PIII 2016
 - Las causas pueden ser diferentes (Interrupciones externas, Timers, ADC, UART, etc.).
 - 7 niveles de prioridad (1 a 7 a través de los registros IPCx). Con 0 se desactiva la interrupción.
 - Permite que una interrupción de mayor prioridad invalide una de menor prioridad que esté en progreso.
+- Existe una tabla de vectores de interrupción (IVT) que indica dónde escribir la función que atenderá dicha interrución.
+- También hay una tabla alternativa (AIVT) que se usa en situaciones de depuración o pruebas. 
 
-- Existe una table de vectores de interrupción (IVT) que indica dónde escribir la función que atenderá dicha interrución.
-
-.. figure:: images/clase02/interrupciones.png
-	
 .. figure:: images/clase02/ivt.png
    :target: http://ww1.microchip.com/downloads/en/DeviceDoc/70046E.pdf
    
