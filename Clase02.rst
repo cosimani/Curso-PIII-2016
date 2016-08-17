@@ -145,33 +145,29 @@ El ejemplo muestra cómo el dsPIC reacciona a un flanco de señal ascendente en 
 - Se utiliza el PORTD para mostrar el número de eventos de interrupción.
 - Puerto RA11 como entrada para producir una interrupción cuando en INT0 cambie de cero a 1. 
 - En el registro IEC0, el bit menos significativo está en uno para interrumpir con INT0. 
-- Cuando se produce una interrupción, la función deteccionDeInterrupcion se invoca
+- Cuando se produce una interrupción, la función deteccionInt0 se invoca
 - Por la instrucción org en la tabla de vectores de interrupción se escribe la función en la posición de memoria 0x000014.
 - Cuando en RA11 aparece un 1, se escribe un 1 en el bit menos significativo del registro IFS0. A continuación, se verifica si la interrupción INT0 está activado (el bit menos significativo de IEC0). 
 - Se lee de la tabla de vectores de interrupción qué parte del programa se debe ejecutar. 
-- En la posición 0x000014 está la función deteccionDeInterrupcion , se ejecuta y vuelve al main.
+- En la posición 0x000014 está la función deteccionInt0, se ejecuta y vuelve al main.
 - Dentro de la función, el software debe poner a cero el bit menos significativo de IFS0. Si no, siempre pensará que hay interrupción.
 - Luego incrementamos en 1 LATD.
 
+*Ejercicio*: Crear un programa con lo siguiente:
+	- Usar el dsPIC33FJ32MC202 
+	- Interrupción externa INT1
+	- Flanco descendente
+	- Pulsador en INT1 con resistencia en Pull up.
 	
-
-*Ejercicio 3*: Crear un programa "Hola mundo" para el dsPIC33FJ32MC202.
-	- Escribir una función void configuracionInicial() para configurar el puerto RB0 como salida
-	- En la función main encender y apagar un LED en RB0 cada 1 segundo
-
-	
-*Ejercicio 1*: Regulador de tensión para los dsPIC33F.
+*Ejercicio*: Regulador de tensión para los dsPIC33F.
 	- Alimentación desde un conector USB.
 	- Utilizar herramientas de medición para asegurarse de los voltajes obtenidos.
 
-*Ejercicio 2*: Alimentar el dsPIC33FJ32MC202.
+*Ejercicio*: Alimentar el dsPIC33FJ32MC202.
 	- Conectar el Master Clear
 	- Utilizar capacitores de desacoplo
 	- Conectar un cristal de cuarzo
-	- Grabarle un programa simple (ver ejercicio 3)
-
-
-
+	- Grabarle un programa creado anteriormente
 
 **Proteus (primer proyecto)**
 
@@ -189,22 +185,6 @@ El ejemplo muestra cómo el dsPIC reacciona a un flanco de señal ascendente en 
 	- CRYSTAL
 - Terminals Mode - Permite agregar tierra, entrada, salida, etc.
 	- GROUND
-
-
-**Código ejemplo del Hola Mundo**
-
-.. code-block::
-
-	void main()  {
-  	    TRISBbits.TRISB0 = 0;            
-  	    LATBbits.LATB0 = 0;    
-
-  	    while(1) {
-    	        LATBbits.LATB0 = ~LATBbits.LATB0;       
-    	        Delay_ms(1000);
-  	    }
-	}
-
 
 **Regulador de tensión 3.3v (esto para los dsPIC33F)**
 
