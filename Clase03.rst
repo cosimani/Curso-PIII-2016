@@ -26,7 +26,38 @@ Ejercicio 1
 	
 	asm nop;
 
-	
+*Resolución Ejercicio (clase pasada):* Una opción para resolverlo.
+
+.. code-block::
+
+    int contadorRB0 = 0;
+    int contadorRB1 = 0;
+
+    void main()  {
+        TRISBbits.TRISB0 = 0;
+        TRISBbits.TRISB1 = 0;
+
+        LATBbits.LATB0 = 1;
+        LATBbits.LATB1 = 1;
+
+        while(1)  {
+            contadorRB0++;
+            contadorRB1++;
+
+            if (contadorRB0 >= 250)  {
+                LATBbits.LATB0 = ~LATBbits.LATB0;
+                contadorRB0 = 0;
+            }
+        
+            if (contadorRB1 >= 133)  {
+                LATBbits.LATB1 = ~LATBbits.LATB1;
+                contadorRB1 = 0;
+            }
+        
+            Delay_ms(1);
+        }
+    }
+		
 
 
 

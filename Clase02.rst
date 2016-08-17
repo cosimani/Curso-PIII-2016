@@ -110,61 +110,35 @@ Secuencia de interrupción
     }
 
 *Ejercicio:* Conectar en RB0 y RB1 dos leds. Programar para que cada uno encienda en distintos tiempos. Por ejemplo:
-	- El LED en RB0 que encienda y apague cada 250 ms
-	- El LED en RB1 que encienda y apague cada 133 ms
 
-Ejercicio 4 (clase pasada): Una opción para resolverlo.
-
-.. code-block::
-
-    int contadorRB0 = 0;
-    int contadorRB1 = 0;
-
-    void main()  {
-        TRISBbits.TRISB0 = 0;
-        TRISBbits.TRISB1 = 0;
-
-        LATBbits.LATB0 = 1;
-        LATBbits.LATB1 = 1;
-
-        while(1)  {
-            contadorRB0++;
-            contadorRB1++;
-
-            if (contadorRB0 >= 250)  {
-                LATBbits.LATB0 = ~LATBbits.LATB0;
-                contadorRB0 = 0;
-            }
-        
-            if (contadorRB1 >= 133)  {
-                LATBbits.LATB1 = ~LATBbits.LATB1;
-                contadorRB1 = 0;
-            }
-        
-            Delay_ms(1);
-        }
-    }
+- El LED en RB0 que encienda y apague cada 250 ms
+- El LED en RB1 que encienda y apague cada 133 ms
+- Primero hacerlo sin interrupciones, y luego proponer otras soluciones.
 	
-
-
 **Ejemplo (para dsPIC30F4013):**
 El ejemplo muestra cómo el dsPIC reacciona a un flanco de señal ascendente en el puerto RF6 (INT0). Para cada flanco ascendente el valor en el puerto D se incrementa en 1.
 
 .. code-block::
 
-    void deteccionDeInterrupcion() org 0x0014  {   // Interrupción en INT0
-        LATD++;		// Incrementamos el contador
-        IFS0.F0 = 0;      // Decimos que ya atendimos la interrupción
-    }
+	void configInicial()  {
+		TRISD = 0;               // Contador de eventos por interrupción
+		TRISAbits.TRISA11 = 1;   // RA11 como entrada
+		INTCON2bits.INT0EP = 0;  // 0 para Ascendente y 1 para Descendente
+	}
 
-    void main(){
-        TRISD = 0;      // Contador de eventos por interrupción
-        TRISA = 0xFFFF; // PORTA para leer el pin RA11
-        IFS0 = 0;       // Interrupción puesta en cero
-        IEC0 = 1;       // Interrupción en el flanco ascendente de INT0 (RA11)
-        while(1) 
-            asm nop;
-    }
+	void deteccionInt0() org 0x0014  {   // Interrupción en INT0
+		LATD++;	            // Incrementamos el contador
+		IFS0bits.INT0IF = 0;    // Decimos que ya atendimos la interrupción
+	}
+
+	void main()  {
+		configInicial();
+		
+		IEC0bits.INT0IE = 1;     // Habilitamos la interrupcion externa 0
+
+		while(1)
+			asm nop;
+	}
 
 *La secuencia es la siguiente:*
 
