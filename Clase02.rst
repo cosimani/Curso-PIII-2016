@@ -5,39 +5,6 @@
 Clase 02 - PIII 2016
 ====================
 
-
-Ejercicio 4 (clase pasada): Una opción para resolverlo.
-
-.. code-block::
-
-    int contadorRB0 = 0;
-    int contadorRB1 = 0;
-
-    void main()  {
-        TRISBbits.TRISB0 = 0;
-        TRISBbits.TRISB1 = 0;
-
-        LATBbits.LATB0 = 1;
-        LATBbits.LATB1 = 1;
-
-        while(1)  {
-            contadorRB0++;
-            contadorRB1++;
-
-            if (contadorRB0 >= 250)  {
-                LATBbits.LATB0 = ~LATBbits.LATB0;
-                contadorRB0 = 0;
-            }
-        
-            if (contadorRB1 >= 133)  {
-                LATBbits.LATB1 = ~LATBbits.LATB1;
-                contadorRB1 = 0;
-            }
-        
-            Delay_ms(1);
-        }
-    }
-	
 .. figure:: images/clase02/interrupciones.png
 	
 .. figure:: images/clase02/ivt.png
@@ -135,6 +102,40 @@ Secuencia de interrupción
         while(1)  {
         }
     }
+
+
+Ejercicio 4 (clase pasada): Una opción para resolverlo.
+
+.. code-block::
+
+    int contadorRB0 = 0;
+    int contadorRB1 = 0;
+
+    void main()  {
+        TRISBbits.TRISB0 = 0;
+        TRISBbits.TRISB1 = 0;
+
+        LATBbits.LATB0 = 1;
+        LATBbits.LATB1 = 1;
+
+        while(1)  {
+            contadorRB0++;
+            contadorRB1++;
+
+            if (contadorRB0 >= 250)  {
+                LATBbits.LATB0 = ~LATBbits.LATB0;
+                contadorRB0 = 0;
+            }
+        
+            if (contadorRB1 >= 133)  {
+                LATBbits.LATB1 = ~LATBbits.LATB1;
+                contadorRB1 = 0;
+            }
+        
+            Delay_ms(1);
+        }
+    }
+	
 
 
 **Ejemplo (para dsPIC30F4013):**
