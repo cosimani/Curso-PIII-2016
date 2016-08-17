@@ -22,7 +22,7 @@ Clase 02 - PIII 2016
    :target: http://ww1.microchip.com/downloads/en/DeviceDoc/70214C.pdf
   
 
-**Escribir una rutina del servicio de interrupción (ISR)**
+**¿Cómo escribir una rutina del servicio de interrupción (ISR)?**
 
 - Función void sin parámetros
 - No puede ser invocada
