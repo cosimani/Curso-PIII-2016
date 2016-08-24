@@ -2,7 +2,7 @@
 
 .. _rcs_subversion:
 
-Clase 03 - PIII 2015
+Clase 03 - PIII 2016
 ====================
 
 .. figure:: images/clase03/manejo_osciladores.png
@@ -26,7 +26,7 @@ Ejercicio 1
 	
 	asm nop;
 
-*Resolución Ejercicio (clase pasada):* Una opción para resolverlo.
+*Resolución Ejercicio (clase pasada):* Una opción para resolverlo. Pero tener en cuenta las diferencias que no da exacto. Analizar el por qué.
 
 .. code-block::
 
