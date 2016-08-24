@@ -116,7 +116,7 @@ Softwares
 	    configuracionInicial();
 
 	    while (1)  {
-	        LATBbits.LATB0 = ~PORTBbits.RB0;
+	        LATBbits.LATB0 = ~LATBbits.RB0;
 	        Delay_ms(1000);
 	    }
 	}
