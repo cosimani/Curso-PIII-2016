@@ -18,17 +18,21 @@ Ejercicio 1
 
 - Definir las siguientes funciones:
 
+.. code-block:: c
+
 	void retardarUnSegundo();
 
 	void retardo(int segundos);
 
 - Con la siguiente línea consumimos un ciclo de instrucción sin hacer nada
 	
+.. code-block:: c
+	
 	asm nop;
 
-*Resolución Ejercicio (clase pasada):* Una opción para resolverlo. Pero tener en cuenta las diferencias que no da exacto. Analizar el por qué.
+*Resolución Ejercicio (clase pasada):* Esta es una opción para resolverlo sin usar Timers. Pero tener en cuenta las diferencias que no da exacto. Analizar el por qué.
 
-.. code-block::
+.. code-block:: c
 
     int contadorRB0 = 0;
     int contadorRB1 = 0;
