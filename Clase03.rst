@@ -30,7 +30,8 @@ Ejercicio 1
 	
 	asm nop;
 
-**Resolución Ejercicio (clase pasada):** Esta es una opción para resolverlo sin usar Timers. Pero tener en cuenta que no da exacto. Analizar el por qué.
+**Resolución Ejercicio (clase pasada):** Esta es una opción para resolverlo sin usar Timers. Pero tener en cuenta que no da exacto. 
+Analizar el por qué. Para ver claro que no da exacto, probar con tiempos de 250 us y 133 us.
 
 .. code-block:: c
 
