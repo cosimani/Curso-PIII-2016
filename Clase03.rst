@@ -110,8 +110,10 @@ Analizar el por qué. Para ver claro que no da exacto, probar con tiempos de 250
 	       asm nop;
 	}
 
+Ejercicio 2
++++++++++++
 
-
+- Mejorar la solución para el ejercicio de los leds encendiendo a 250 us y 133 us.
 
 
 
