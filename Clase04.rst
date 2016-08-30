@@ -2,7 +2,7 @@
 
 .. _rcs_subversion:
 
-Clase 04 - PIII 2015
+Clase 04 - PIII 2016
 ====================
 
 Conversor AD
@@ -29,8 +29,8 @@ Conversor AD
 
 - El proceso de adquisición de muestras se inicia activando el bit SAMP (este bit está en ADCON1)
 - La conversión se puede iniciar por: bits de control programable, contador de tiempo o un evento externo
-- Cuando el tiempo de conversión es completa, el resultado se carga en la buffer ADBUF0 a ADBUFF. 
-- Al término de la conversión, el bit DONE (está en ADCON1) y la bandera de interrupción se setean luego del número de muestras definidas por los bits de control SMPI (este bit está en ADCON2)
+- Cuando el tiempo de conversión es completada, el resultado se carga en el buffer ADBUF0 a ADBUFF. 
+- Al término de la conversión, el bit DONE (que está en ADCON1) y la bandera de interrupción se setean luego del número de muestras definidas por los bits de control SMPI (este bit está en ADCON2)
 
 **Pasos para realizar una conversión AD:**
 
