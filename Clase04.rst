@@ -168,6 +168,14 @@ Registros
 .. figure:: images/clase04/registro_adc6.png
    :target: http://ww1.microchip.com/downloads/en/DeviceDoc/70046E.pdf
 
+**Materiales para comprar por alumno**: Para el día 14 de septiembre
+
+- Un dsPIC con su zócalo
+- El cristal
+- 3 leds con sus resistencias
+- Pines
+- Fichitas para esos pines
+- Las resistencias para DAC R-2R de 10 bits
 
 
 
