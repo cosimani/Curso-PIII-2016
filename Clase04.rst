@@ -168,7 +168,7 @@ Registros
 .. figure:: images/clase04/registro_adc6.png
    :target: http://ww1.microchip.com/downloads/en/DeviceDoc/70046E.pdf
 
-**Materiales para comprar por alumno**: Para el día 14 de septiembre
+**Materiales para comprar por alumno**: Para el día 28 de septiembre
 
 - Un dsPIC con su zócalo
 - El cristal
