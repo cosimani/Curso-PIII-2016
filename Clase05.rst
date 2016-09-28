@@ -244,7 +244,8 @@ Ejemplo
 		return 0;
 	}
 
-**Generador de señales**
+Generador de señales
+^^^^^^^^^^^^^^^^^^^^
 
 .. figure:: images/clase07/senal_continua_discreta.png
 
