@@ -351,6 +351,17 @@ Generador de señales
 
 - Muestrear una señal de audio y aplicar el trémolo anterior.
 
+**Entregas para el 5 de octubre:**
+
+- Cada uno debe entregar los ejercicios 1 y 2
+- Con las siguientes modificaciones:
+- Gastón - 3 Hz
+- Lucas - 5 Hz
+- Elián - 6 Hz
+- Juan - 7 Hz
+- Leandro - 8 Hz
+- Mauricio - 9 Hz
+- Tomás - 10 Hz
 
 
 
