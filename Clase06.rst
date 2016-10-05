@@ -11,7 +11,7 @@ Guía de ejercicios
 Se presentan los enunciados de los prácticos y las variantes para cada alumno.
 
 Práctico 1
-++++++++++
+==========
 
 Muestrear una señal analógica, aplicarle un trémolo y mostrar la resultante luego de un DAC R-2R.
 
@@ -19,24 +19,26 @@ Muestrear una señal analógica, aplicarle un trémolo y mostrar la resultante l
 
 - Entrada por AN2
 - Utilizar Vref+ y Vref- con valores óptimos
-- Frecuencia de señal analógica 1 kHz
+- Frecuencia de señal analógica 150 Hz
 - Entíendase el trémolo como una señal modulada con un índice de modulación del 25%
+- Frecuencia de muestreo: 600 Hz
+- ADC de 10 bits
 
 **Variaciones por alumno:**
 
 :Elián:
     Frecuencia del trémolo: 2 Hz
 	
-    Amplitud pico a pico señal analógica: 3 V
+    Amplitud pico a pico señal analógica: 0.6 V
 	
-    Offset señal analógica: 1.8 V
+    Offset señal analógica: 0.8 V
 
 :Gastón:
     Frecuencia del trémolo: 18 Hz
 	
     Amplitud pico a pico señal analógica: 2 V
 	
-    Offset señal analógica: 2.2 V
+    Offset señal analógica: 1.2 V
 
 :Juan:
     Frecuencia del trémolo: 45 Hz
@@ -50,7 +52,7 @@ Muestrear una señal analógica, aplicarle un trémolo y mostrar la resultante l
 	
     Amplitud pico a pico señal analógica: 300 mV
 	
-    Offset señal analógica: 3.2 V
+    Offset señal analógica: 2.2 V
 
 :Lucas:
     Frecuencia del trémolo: 95 Hz
@@ -71,4 +73,14 @@ Muestrear una señal analógica, aplicarle un trémolo y mostrar la resultante l
 	
     Amplitud pico a pico señal analógica: 1 V
 	
-    Offset señal analógica: 3.5 V
+    Offset señal analógica: 1.5 V
+	
+**Ejemplo que sirve de guía:** 
+
+- `Solución de un ejercicio parecido <https://github.com/cosimani/Curso-PIII-2016/blob/master/resources/clase06/Ej1.rar?raw=true>`_
+
+Práctico 2
+==========
+
+Práctico 3
+==========
