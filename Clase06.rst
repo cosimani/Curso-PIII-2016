@@ -79,8 +79,9 @@ Muestrear una señal analógica, aplicarle un trémolo y mostrar la resultante l
 
 - `Solución de un ejercicio parecido <https://github.com/cosimani/Curso-PIII-2016/blob/master/resources/clase06/Ej1.rar?raw=true>`_
 
-.. image:: images/clase06/Ej1-Esquema.png
-   :width: 40pt
+.. figure:: images/clase06/Ej1-Esquema.png
+
+.. figure:: images/clase06/Ej1-Osciloscopio.png
 
 Práctico 2
 ==========
