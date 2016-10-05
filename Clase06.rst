@@ -28,7 +28,7 @@ Muestrear una señal analógica, aplicarle un trémolo y mostrar la resultante l
 
 - Proyecto en Proteus
 - Proyecto en mikroC
-- Captura de pantalla con la señal resultante
+- Captura de pantalla del osciloscopio de Proteus con la señal resultante
 - Captura de pantalla con el esquema en Proteus
 - En caso de no lograr el resultado esperado, se debe entregar además de lo anterior, un reporte con discusión de los resultados obtenidos
 
