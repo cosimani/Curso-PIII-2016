@@ -15,17 +15,19 @@ Práctico 1
 
 Muestrear una señal analógica, aplicarle un trémolo y mostrar la resultante luego de un DAC R-2R.
 
-*Especificaciones comunes:*
+**Especificaciones comunes:**
 
 - Entrada por AN2
-- Utilizar Vref+ y Vref-
+- Utilizar Vref+ y Vref- con valores óptimos
 - Frecuencia de señal analógica 1 kHz
+- Entíendase el trémolo como una señal modulada con un índice de modulación del 25%
+
+**Variaciones por alumno:**
 
 :Elián:
-    Tony J. (Tibs) Ibbs,
-    David Goodger
-
-    (and sundry other good-natured folks)
+    Frecuencia del trémolo: 2 Hz
+	Amplitud pico a pico señal analógica: 3 V
+	Offset señal analógica: 1.2 V
 
 :Gastón:
     Tony J. (Tibs) Ibbs,
