@@ -29,40 +29,46 @@ Muestrear una señal analógica, aplicarle un trémolo y mostrar la resultante l
 	
     Amplitud pico a pico señal analógica: 3 V
 	
-    Offset señal analógica: 1.2 V
+    Offset señal analógica: 1.8 V
 
 :Gastón:
-    Tony J. (Tibs) Ibbs,
-    David Goodger
-
-    (and sundry other good-natured folks)
+    Frecuencia del trémolo: 18 Hz
+	
+    Amplitud pico a pico señal analógica: 2 V
+	
+    Offset señal analógica: 2.2 V
 
 :Juan:
-    Tony J. (Tibs) Ibbs,
-    David Goodger
-
-    (and sundry other good-natured folks)
+    Frecuencia del trémolo: 45 Hz
+	
+    Amplitud pico a pico señal analógica: 800 mV
+	
+    Offset señal analógica: 1.2 V
 
 :Leandro:
-    Tony J. (Tibs) Ibbs,
-    David Goodger
-
-    (and sundry other good-natured folks)
+    Frecuencia del trémolo: 73 Hz
+	
+    Amplitud pico a pico señal analógica: 300 mV
+	
+    Offset señal analógica: 3.2 V
 
 :Lucas:
-    Tony J. (Tibs) Ibbs,
-    David Goodger
-
-    (and sundry other good-natured folks)
+    Frecuencia del trémolo: 95 Hz
+	
+    Amplitud pico a pico señal analógica: 1.3 V
+	
+    Offset señal analógica: 1.3 V
 
 :Mauricio:
-    Tony J. (Tibs) Ibbs,
-    David Goodger
-
-    (and sundry other good-natured folks)
+    Frecuencia del trémolo: 124 Hz
+	
+    Amplitud pico a pico señal analógica: 500 mV
+	
+    Offset señal analógica: 1 V
 
 :Tomás:
-    Tony J. (Tibs) Ibbs,
-    David Goodger
-
-    (and sundry other good-natured folks)
+    Frecuencia del trémolo: 153 Hz
+	
+    Amplitud pico a pico señal analógica: 1 V
+	
+    Offset señal analógica: 3.5 V
