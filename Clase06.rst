@@ -27,9 +27,9 @@ Muestrear una señal analógica, aplicarle un trémolo y mostrar la resultante l
 :Elián:
     Frecuencia del trémolo: 2 Hz
 	
-	Amplitud pico a pico señal analógica: 3 V
+    Amplitud pico a pico señal analógica: 3 V
 	
-	Offset señal analógica: 1.2 V
+    Offset señal analógica: 1.2 V
 
 :Gastón:
     Tony J. (Tibs) Ibbs,
