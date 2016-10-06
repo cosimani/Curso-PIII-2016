@@ -39,7 +39,7 @@ Muestrear una señal analógica, aplicarle un trémolo y mostrar la resultante l
 	
     Amplitud pico a pico señal analógica: 0.6 V
 	
-	Índice de modulación del 20%
+    Índice de modulación del 20%
 	
     Offset señal analógica: 0.8 V
 
@@ -48,7 +48,7 @@ Muestrear una señal analógica, aplicarle un trémolo y mostrar la resultante l
 	
     Amplitud pico a pico señal analógica: 2 V
 	
-	Índice de modulación del 30%
+    Índice de modulación del 30%
 	
     Offset señal analógica: 1.2 V
 
@@ -57,7 +57,7 @@ Muestrear una señal analógica, aplicarle un trémolo y mostrar la resultante l
 	
     Amplitud pico a pico señal analógica: 800 mV
 	
-	Índice de modulación del 40%
+    Índice de modulación del 40%
 	
     Offset señal analógica: 1.2 V
 
@@ -66,7 +66,7 @@ Muestrear una señal analógica, aplicarle un trémolo y mostrar la resultante l
 	
     Amplitud pico a pico señal analógica: 300 mV
 	
-	Índice de modulación del 50%
+    Índice de modulación del 50%
 	
     Offset señal analógica: 2.2 V
 
@@ -75,7 +75,7 @@ Muestrear una señal analógica, aplicarle un trémolo y mostrar la resultante l
 	
     Amplitud pico a pico señal analógica: 1.3 V
 	
-	Índice de modulación del 60%
+    Índice de modulación del 60%
 	
     Offset señal analógica: 1.3 V
 
@@ -84,7 +84,7 @@ Muestrear una señal analógica, aplicarle un trémolo y mostrar la resultante l
 	
     Amplitud pico a pico señal analógica: 500 mV
 	
-	Índice de modulación del 70%
+    Índice de modulación del 70%
 	
     Offset señal analógica: 1 V
 
@@ -93,7 +93,7 @@ Muestrear una señal analógica, aplicarle un trémolo y mostrar la resultante l
 	
     Amplitud pico a pico señal analógica: 1 V
 	
-	Índice de modulación del 80%
+    Índice de modulación del 80%
 	
     Offset señal analógica: 1.5 V
 	
