@@ -54,7 +54,7 @@ Clase 08 - PIII 2016
 	    AD1CON1bits.ASAM = 0;
 
 	    AD1CON2bits.VCFG = 0b000;  // Referencia desde la fuente de alimentación
-        AD1CON2bits.SMPI = 0b0000;  // Lanza interrupción luego de tomar n muestras.
+	    AD1CON2bits.SMPI = 0b0000;  // Lanza interrupción luego de tomar n muestras.
 	    // Con SMPI=0b0000 -> 1 muestra ; Con SMPI=0b0001 -> 2 muestras ; Con SMPI=0b0010 -> 3 muestras ; etc.
 
 	    // AD1CON3 no se usa ya que usamos muestreo manual
