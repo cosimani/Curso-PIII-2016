@@ -11,6 +11,8 @@ Clase 08 - PIII 2016
 
 **Ejemplo para dsPIC33FJ32MC202 para Proteus**
 
+- `Proyecto en Proteus 8.1 <https://github.com/cosimani/Curso-PIII-2016/blob/master/resources/clase08/EjemploClase8.rar?raw=true>`_
+
 .. code-block:: c
 
 	// Device setup:
