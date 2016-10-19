@@ -2,225 +2,85 @@
 
 .. _rcs_subversion:
 
-Clase 08 - PIII 2015
+Clase 08 - PIII 2016
 ====================
 
-**ADC automático para dsPIC30F4013**
+**Probando filtros en Proteus y en Placa**
 
-.. figure:: images/clase08/adc_auto_1.png
+- Video sobre cómo utilizar el generador de señal (https://www.youtube.com/watch?v=qCRcNYbqBxs)
 
-.. figure:: images/clase08/adc_auto_2.png
-
-.. figure:: images/clase08/adc_auto_3.png
-
-**Ejemplo:** Realizar cálculo para muestrear la voz humana
-
-.. figure:: images/clase08/adc_auto_ejer_1.png
-
-.. figure:: images/clase08/adc_auto_ejer_2.png
-
-**Ejercicio 1:** Programar esto y controlar con el EasydsPIC si la frecuencia de muestreo está bien.
-
-**Ejercicio 2:** Adaptar el programa para el dsPIC33FJ32MC202 y controlarlo en Proteus.
-
-**Resolución Ejercicio 1**
+**Ejemplo para dsPIC33FJ32MC202 para Proteus**
 
 .. code-block:: c
 
-	unsigned int contador = 0;
+	// Device setup:
+	//     Device name: P33FJ32MC202
+	//     Device clock: 010.000000 MHz
+	//     Sampling Frequency: 1000 Hz
+	// Filter setup:
+	//     Filter kind: FIR
+	//     Filter type: Lowpass filter
+	//     Filter order: 30
+	//     Filter window: Rectangular
+	//     Filter borders:
+	//       Wpass:30 Hz
+	const unsigned BUFFFER_SIZE  = 32;
+	const unsigned FILTER_ORDER  = 30;
 
-	void detectar_adc() org 0x002a  {
-	    contador = contador + 1;
-	    if (contador > 2000)  {  // Para que D1 cambie de estado cada 1 segundo
-	        LATDbits.LATD1 = ~LATDbits.LATD1;
-	        contador = 0;
-	    }
+	const unsigned COEFF_B[FILTER_ORDER+1] = {
+	    0x01AE, 0x02CE, 0x03FF, 0x053B, 0x067E, 0x07C0,
+	    0x08FC, 0x0A2A, 0x0B46, 0x0C4A, 0x0D2F, 0x0DF2,
+	    0x0E8E, 0x0F00, 0x0F45, 0x0F5C, 0x0F45, 0x0F00,
+	    0x0E8E, 0x0DF2, 0x0D2F, 0x0C4A, 0x0B46, 0x0A2A,
+	    0x08FC, 0x07C0, 0x067E, 0x053B, 0x03FF, 0x02CE,
+	    0x01AE};
 
-	    IFS0bits.ADIF = 0;
-	}
+	unsigned inext;                       // Input buffer index
+	ydata unsigned input[BUFFFER_SIZE];   // Input buffer, must be in Y data space
 
 	void config_adc()  {
-	    ADPCFG = 0xFFFD;  // Elegimos la entrada analógica
+	    ADPCFG = 0xFFF7; // La entrada analogica es el AN3 (pin 5)
+	    // Con cero se indica entrada analogica y con 1 sigue siendo entrada digital.
 
-	    ADCON1bits.ADSIDL = 1;  // No trabaja en modo IDLE (modo bajo consumo - CPU off, Peripherals on)
-	    ADCON1bits.FORM = 0b00;  // Formato de salida entero
-	    ADCON1bits.SSRC = 0b111;  // Muestreo automatico
-	    ADCON1bits.ASAM = 1;  // Comienza a muestrear luego de la conversion anterior
+	    AD1CON1bits.ADON = 0;  // ADC apagado por ahora
+	    AD1CON1bits.AD12B = 0;  // ADC de 10 bits
+	    AD1CON1bits.FORM = 0b00;  // Formato de salida entero
 
-	    ADCON2bits.VCFG = 0b000;  // Referencia AVdd y AVss
-	    ADCON2bits.SMPI = 0b0000;  // Lanza interrupcion luego de n muestras
-	    // 0b0000 - 1 muestra / 0b0001 - 2 muestras / 0b0010 - 3 muestras
+	    // Tomar muestras en forma manual, porque lo vamos a controlar con el Timer 2
+	    AD1CON1bits.SSRC = 0b000;
 
-	    ADCON3bits.SAMC = 31;
-	    ADCON3bits.ADCS = 55;
+	    // Adquiere muestra cuando el SAMP se pone en 1. SAMP lo controlamos desde el Timer 2
+	    AD1CON1bits.ASAM = 0;
 
-	    ADCHSbits.CH0SA = 0b0001;
-	    ADCHSbits.CH0SB = 0b0000;
+	    AD1CON2bits.VCFG = 0b011;  // Referencia con fuente externa VRef+ y VRef-
+	    AD1CON2bits.SMPI = 0b0000;  // Lanza interrupción luego de tomar n muestras.
+	    // Con SMPI=0b0000 -> 1 muestra ; Con SMPI=0b0001 -> 2 muestras ; Con SMPI=0b0010 -> 3 muestras ; etc.
 
-	    ADCON1bits.ADON = 1;
+	    // AD1CON3 no se usa ya que usamos muestreo manual
+
+	    // Muestreo la entrada analogica AN3 contra el nivel de VRef+ y VRef-
+	    AD1CHS0 = 0b00011;
 	}
 
-	void configuracionPuertos()  {
-	    // Para LEDs de debug
-	    TRISDbits.TRISD1 = 0;  // Debug IntADC
+	void config_timer2()  {
+	    // Prescaler 1:1   -> TCKPS = 0b00 -> Incrementa 1 en un ciclo de instruccion
+	    // Prescaler 1:8   -> TCKPS = 0b01 -> Incrementa 1 en 8 ciclos de instruccion
+	    // Prescaler 1:64  -> TCKPS = 0b10 -> Incrementa 1 en 64 ciclos de instruccion
+	    // Prescaler 1:256 -> TCKPS = 0b11 -> Incrementa 1 en 256 ciclos de instruccion
+	    T2CONbits.TCKPS = 0b00;
+
+	    // Empieza cuenta en 0
+	    TMR2=0;
+
+	    // Cuenta hasta 5000 ciclos y dispara interrupcion
+	    PR2=5000;  // 5000 * 200 nseg = 1 mseg   ->  1 / 1mseg = 1000Hz
 	}
 
-	void main()  {
-	    configuracionPuertos();
+	void config_ports()  {
+	    TRISAbits.TRISA3 = 1;  // Entrada para muestrear = AN3
 
-	    config_adc();
-
-	    IEC0bits.ADIE = 1;
-
-	    while(1)  {
-	    }
-	}
-
-Programación de filtros
-^^^^^^^^^^^^^^^^^^^^^^^	
-	
-**Función de transferencia**
-
-- Relación entre la entrada y la salida al pasar por el proceso
-- Se manipulan en términos de la frecuencia compleja y no del tiempo continuo para simplificar
-- Las funciones de transferencia en tiempo discreto se hace en término de la variable compleja z
-- Se recurre a la transformada Z que representa la frecuencia compleja para tiempo discreto
-
-.. figure:: images/clase08/filtros_1.png
-
-- Para el tratamiento real en término del tiempo discreto se realiza la transformada inversa de z
-- La transformación inversa de la ecuación anterior queda en función del tiempo discreto queda:
-
-.. figure:: images/clase08/filtros_2.png
-
-- Esto es una convolución
-- El número máximo que asume n es M
-- M determina el orden de la función de transferencia
-
-- FIR: Sistema sin memoria. Convolución con muestras pasadas y actuales.
-- IIR: Sistema con memoria. Convolución con muestras pasadas y actuales, y también salidas pasadas y(n)
-
-- FIR: Fácil implementación y diseño pero consumen más recursos
-- IIR: Más matemática pero requieren campos de memoria más pequeños
-
-**Convolución en C**
-
-.. figure:: images/clase08/filtros_3.png
-
-**El código puede ser:**
-
-.. code-block:: c
-
-	#define M 17
-	float x[M];
-	float h[M];
-
-	float yn = 0;
-	short k;
-	
-	for (k=M-1 ; k>=1 ; k--)
-	    x[n] = x[n-1];
-		
-	x[0] = x0;  // x0 es la muestra actual
-	
-	for (k=0 ; k<M ; k++)
-	    yn += h[k]*x[k];
-
-**Función de transferencia: Filtro pasa bajos**
-
-.. figure:: images/clase08/filtros_4.png
-
-- Lo podemos calcular con el Excel
-
-.. figure:: images/clase08/filtros_5.png
-
-.. figure:: images/clase08/filtros_6.png
-
-**Ejemplo Filtro FIR**
-
-- Fs = 4000
-- Fc = 150Hz
-
-- Para programarlo en C llevamos n a los valores de 0 a 16. El programa quedaría:
-
-.. code-block:: c
-
-	#define M 17
-	float x[M];
-	float h[M] = 
-	    {0.037841336, 0.045332663, 0.052398494, 0.058815998, 0.064379527,
-	    0.068908578, 0.072254832, 0.074307967, 0.075, 0.074307967, 0.072254832, 0.068908578,
-	    0.064379527, 0.058815998, 0.052398494, 0.045332663, 0.037841336};
-
-	float yn=0;
-
-	unsigned int i;
-	short k;
-	float valorActual = 0;
-
-	void  detectarIntADC()  org 0x002E  {
-	    IFS0bits.AD1IF=0;
-
-	    for (k=M-1 ; k>=1 ; k--)  {
-	        x[k] = x[k-1];
-	    }
-
-	    //Se guarda la última muestra.
-	    x[0] = ((float)ADC1BUF0-2048);
-
-	    yn = 0;
-
-	    for (k=0 ; k<M ; k++)  {
-	        yn += h[k]*x[k];
-	    }
-
-	    valorActual = yn + 2048;
-
-	    LATBbits.LATB2 =   ((unsigned int)valorActual & 0b0000100000000000) >> 11;
-	    LATBbits.LATB3 =   ((unsigned int)valorActual & 0b0000010000000000) >> 10;
-	    LATBbits.LATB4 =   ((unsigned int)valorActual & 0b0000001000000000) >> 9;
-	    LATBbits.LATB5 =   ((unsigned int)valorActual & 0b0000000100000000) >> 8;
-	    LATBbits.LATB6 =  ((unsigned int)valorActual &  0b0000000010000000) >> 7;
-	    LATBbits.LATB7 =  ((unsigned int)valorActual &  0b0000000001000000) >> 6;
-	    LATBbits.LATB8 =  ((unsigned int)valorActual &  0b0000000000100000) >> 5;
-	    LATBbits.LATB9 =  ((unsigned int)valorActual &  0b0000000000010000) >> 4;
-	    LATBbits.LATB10 = ((unsigned int)valorActual &  0b0000000000001000) >> 3;
-	    LATBbits.LATB11 = ((unsigned int)valorActual &  0b0000000000000100) >> 2;
-	    LATBbits.LATB12 = ((unsigned int)valorActual &  0b0000000000000010) >> 1;
-	    LATBbits.LATB13 = ((unsigned int)valorActual &  0b0000000000000001) >> 0;
-	}
-
-	void detectarIntT2() org 0x0022  {
-
-	    IFS0bits.T2IF=0;  //borra bandera de interrupcion de TIMER2
-
-	    LATBbits.LATB15=~LATBbits.LATB15;
-
-	    AD1CON1bits.SAMP=1; //pedimos muestras
-	    asm nop;  //ciclo instruccion sin operacion
-	    AD1CON1bits.SAMP=0;  //retener muestra e inicia conversion
-	}
-
-	void configADC()  {
-	    AD1PCFGL=0b111011;  //elegimos AN2 como entrada para muestras
-	    AD1CHS0 =0b0010; //usamos AN2 para recibir las muestras en el ADC
-	    AD1CON1bits.SSRC=0b000; //muestreo manual
-	    AD1CON1bits.ADON=0;  //apagamos ADC
-	    AD1CON1bits.AD12B=1;  //12bits S&H ADC1
-	    AD1CON2bits.VCFG=0b011;  //tension de referencia externa Vref+ Vref-
-	    IEC0bits.AD1IE=1;  //habilitamos interrupcion del ADC
-	}
-
-	void configTIMER2()  {
-	    T2CON=0x0000;   //registro de control de TIMER2 a cero
-	    T2CONbits.TCKPS=0b00;// prescaler = 1
-	    TMR2=0;  //desde donde va a arrancar la cuenta
-	    PR2=1250;   //hasta donde cuenta segun calculo para disparo de TIMER2
-	    IEC0bits.T2IE=1; //habilitamos interrupciones para TIMER2
-	}
-
-	void configPuertos()  {
-	    TRISBbits.TRISB2 = 0;
+	    // Elegimos los puertos RB2-RB11 para la salida digital
+	    TRISBbits.TRISB2 = 0;  // Menos significativo
 	    TRISBbits.TRISB3 = 0;
 	    TRISBbits.TRISB4 = 0;
 	    TRISBbits.TRISB5 = 0;
@@ -229,11 +89,205 @@ Programación de filtros
 	    TRISBbits.TRISB8 = 0;
 	    TRISBbits.TRISB9 = 0;
 	    TRISBbits.TRISB10 = 0;
+	    TRISBbits.TRISB11 = 0;  // Mas significativo
+
+	    TRISBbits.TRISB0 = 1;  // Para control del filtro
+
+	    TRISBbits.TRISB13 = 0;  // Debug T2
+	    TRISBbits.TRISB14 = 0;  // Debug ADC
+	}
+
+	void detect_timer2() org 0x0022  {
+	    IFS0bits.T2IF=0;  // Borramos la bandera de interrupción Timer 2
+
+	    LATBbits.LATB13 = !LATBbits.LATB13;  // Para debug de la interrupcion Timer 2
+
+	    AD1CON1bits.DONE = 0;  // Antes de pedir una muestra ponemos en cero
+	    AD1CON1bits.SAMP = 1;  // Pedimos una muestra
+
+	    asm nop;  // Tiempo que debemos esperar para que tome una muestra
+
+	    AD1CON1bits.SAMP = 0;  // Pedimos que retenga la muestra
+	}
+
+	void detect_adc() org 0x002e  {
+	    unsigned CurrentValue;
+
+	    IFS0bits.AD1IF = 0; // Borramos el flag de interrupciones del ADC
+	    LATBbits.LATB14 = !LATBbits.LATB14;  // Para debug de la interrupcion ADC
+
+	    if(PORTBbits.RB0 == 1)  {
+	        input[inext] = ADCBUF0;                 // Fetch sample
+
+	        CurrentValue = FIR_Radix(FILTER_ORDER+1,// Filter order
+	                                 COEFF_B,      // b coefficients of the filter
+	                                 BUFFFER_SIZE, // Input buffer length
+	                                 input,        // Input buffer
+	                                 inext);       // Current sample
+
+	        inext = (inext+1) & (BUFFFER_SIZE-1);   // inext = (inext + 1) mod BUFFFER_SIZE;
+
+	        LATBbits.LATB11 =   ((unsigned int)CurrentValue & 0b0000001000000000) >> 9;
+	        LATBbits.LATB10 =   ((unsigned int)CurrentValue & 0b0000000100000000) >> 8;
+	        LATBbits.LATB9 =  ((unsigned int)CurrentValue &  0b0000000010000000) >> 7;
+	        LATBbits.LATB8 =  ((unsigned int)CurrentValue &  0b0000000001000000) >> 6;
+	        LATBbits.LATB7 =  ((unsigned int)CurrentValue &  0b0000000000100000) >> 5;
+	        LATBbits.LATB6 =  ((unsigned int)CurrentValue &  0b0000000000010000) >> 4;
+	        LATBbits.LATB5 = ((unsigned int)CurrentValue &  0b0000000000001000) >> 3;
+	        LATBbits.LATB4 = ((unsigned int)CurrentValue &  0b0000000000000100) >> 2;
+	        LATBbits.LATB3 = ((unsigned int)CurrentValue &  0b0000000000000010) >> 1;
+	        LATBbits.LATB2 = ((unsigned int)CurrentValue &  0b0000000000000001) >> 0;
+	    }
+	    else  {
+	        // Almacenamos los 10 bits del ADC
+	        LATBbits.LATB2 = ADCBUF0.B0;
+	        LATBbits.LATB3 = ADCBUF0.B1;
+	        LATBbits.LATB4 = ADCBUF0.B2;
+	        LATBbits.LATB5 = ADCBUF0.B3;
+	        LATBbits.LATB6 = ADCBUF0.B4;
+	        LATBbits.LATB7 = ADCBUF0.B5;
+	        LATBbits.LATB8 = ADCBUF0.B6;
+	        LATBbits.LATB9 = ADCBUF0.B7;
+	        LATBbits.LATB10 = ADCBUF0.B8;
+	        LATBbits.LATB11 = ADCBUF0.B9;
+	    }
+	}
+
+	int main()  {
+	    config_ports();
+	    config_timer2();
+	    config_adc();
+
+	    // Habilitamos interrupción del ADC y lo encendemos
+	    IEC0bits.AD1IE = 1;
+	    AD1CON1bits.ADON = 1;
+
+	    // Habilita interrupción del Timer 2 y lo iniciamos para que comience a contar
+	    IEC0bits.T2IE=1;
+	    T2CONbits.TON=1;
+
+	    while(1)  {  }
+
+	    return 0;
+	}
+
+**Ejemplo para dsPIC30F4013 para Placa**
+
+.. code-block:: c
+	
+	const unsigned BUFFFER_SIZE  = 32;
+	const unsigned FILTER_ORDER  = 64;
+
+	const unsigned COEFF_B[FILTER_ORDER+1] = {
+	    0xFD94, 0xFDE0, 0x0000, 0x0246, 0x02C5, 0x00EF,
+	    0xFE28, 0xFCBE, 0xFE01, 0x0118, 0x0386, 0x0324,
+	    0x0000, 0xFC88, 0xFBB2, 0xFE85, 0x02FE, 0x056F,
+	    0x036C, 0xFE10, 0xF98B, 0xFA02, 0x0000, 0x0753,
+	    0x09B0, 0x0399, 0xF804, 0xEFB4, 0xF407, 0x0865,
+	    0x26C0, 0x41ED, 0x4CCD, 0x41ED, 0x26C0, 0x0865,
+	    0xF407, 0xEFB4, 0xF804, 0x0399, 0x09B0, 0x0753,
+	    0x0000, 0xFA02, 0xF98B, 0xFE10, 0x036C, 0x056F,
+	    0x02FE, 0xFE85, 0xFBB2, 0xFC88, 0x0000, 0x0324,
+	    0x0386, 0x0118, 0xFE01, 0xFCBE, 0xFE28, 0x00EF,
+	    0x02C5, 0x0246, 0x0000, 0xFDE0, 0xFD94};
+
+	unsigned inext;                       // Input buffer index
+	ydata unsigned input[BUFFFER_SIZE];   // Input buffer, must be in Y data space
+
+	void  detectarIntADC()  org 0x002a  {
+	    unsigned CurrentValue;
+
+	    IFS0bits.ADIF = 0; // Borramos el flag de interrupciones del ADC
+	    LATFbits.LATF1 = !LATFbits.LATF1;  // Para debug de la interrupcion ADC
+
+	    if(PORTFbits.RF4 == 1)  {
+	        LATFbits.LATF5 = 1;  // Filtro no aplicado
+
+	        input[inext] = ADCBUF0;                  // Fetch sample
+
+	        CurrentValue = FIR_Radix(FILTER_ORDER+1, // Filter order
+	                                 COEFF_B,        // b coefficients of the filter
+	                                 BUFFFER_SIZE,   // Input buffer length
+	                                 input,          // Input buffer
+	                                 inext);         // Current sample
+
+	        inext = (inext+1) & (BUFFFER_SIZE-1);    // inext = (inext + 1) mod BUFFFER_SIZE;
+
+	        LATBbits.LATB8 =   ((unsigned int)CurrentValue & 0b0000001000000000) >> 9;
+	        LATBbits.LATB9 =   ((unsigned int)CurrentValue & 0b0000000100000000) >> 8;
+	        LATBbits.LATB10 = ((unsigned int)CurrentValue &  0b0000000010000000) >> 7;
+	        LATBbits.LATB11 = ((unsigned int)CurrentValue &  0b0000000001000000) >> 6;
+	        LATBbits.LATB12 = ((unsigned int)CurrentValue &  0b0000000000100000) >> 5;
+	        LATCbits.LATC13 = ((unsigned int)CurrentValue &  0b0000000000010000) >> 4;
+	        LATCbits.LATC14 = ((unsigned int)CurrentValue &  0b0000000000001000) >> 3;
+	        LATDbits.LATD0 =  ((unsigned int)CurrentValue &  0b0000000000000100) >> 2;
+	        LATDbits.LATD1 =  ((unsigned int)CurrentValue &  0b0000000000000010) >> 1;
+	        LATDbits.LATD2 =  ((unsigned int)CurrentValue &  0b0000000000000001) >> 0;
+	    }
+	    else  {
+	        LATFbits.LATF5 = 0;  // Filtro no aplicado
+
+	        LATBbits.LATB8 = ADCBUF0.B9;
+	        LATBbits.LATB9 = ADCBUF0.B8;
+	        LATBbits.LATB10 = ADCBUF0.B7;
+	        LATBbits.LATB11 = ADCBUF0.B6;
+	        LATBbits.LATB12 = ADCBUF0.B5;
+	        LATCbits.LATC13 = ADCBUF0.B4;
+	        LATCbits.LATC14 = ADCBUF0.B3;
+	        LATDbits.LATD0 = ADCBUF0.B2;
+	        LATDbits.LATD1 = ADCBUF0.B1;
+	        LATDbits.LATD2 = ADCBUF0.B0;
+	    }
+	}
+
+	void detectarIntT2() org 0x0020  {
+	    IFS0bits.T2IF=0;  //borra bandera de interrupcion de TIMER2
+
+	    LATFbits.LATF0 = !LATFbits.LATF0;
+
+	    ADCON1bits.SAMP=1; //pedimos muestras
+	    asm nop;  //ciclo instruccion sin operacion
+	    ADCON1bits.SAMP=0;  //retener muestra e inicia conversion
+	}
+
+	void configADC()  {
+	    ADPCFG = 0b111011;  // elegimos AN2 como entrada para muestras
+	    ADCHS = 0b0010; // usamos AN2 para recibir las muestras en el ADC
+	    ADCON1bits.SSRC = 0b000; // muestreo manual
+	    ADCON1bits.ADON = 0;  // apagamos ADC
+	    ADCON2bits.VCFG = 0b000;  // tension de referencia 0 y 3.3
+	    IEC0bits.ADIE=1;  // habilitamos interrupcion del ADC
+	}
+
+	void configTIMER2()  {
+	    T2CON = 0x0000;   //registro de control de TIMER2 a cero
+	    T2CONbits.TCKPS = 0b00; // prescaler = 1
+	    TMR2 = 0;  // desde donde va a arrancar la cuenta
+	    PR2 = 1250;   // hasta donde cuenta segun calculo para disparo de TIMER2
+	    IEC0bits.T2IE = 1; // habilitamos interrupciones para TIMER2
+	}
+
+	void configPuertos()  {
+	    // 10 bits de salida
+	    TRISBbits.TRISB8 = 0;
+	    TRISBbits.TRISB9 = 0;
+	    TRISBbits.TRISB10 = 0;
 	    TRISBbits.TRISB11 = 0;
 	    TRISBbits.TRISB12 = 0;
-	    TRISBbits.TRISB13 = 0;
+	    TRISCbits.TRISC13 = 0;
+	    TRISCbits.TRISC14 = 0;
+	    TRISDbits.TRISD0 = 0;
+	    TRISDbits.TRISD1 = 0;
+	    TRISDbits.TRISD2 = 0;
 
-	    TRISBbits.TRISB15=0;  // Debug T2
+	    TRISBbits.TRISB2 = 1;  // AN2
+
+	    TRISFbits.TRISF0 = 0;  // Debug T2
+	    TRISFbits.TRISF1 = 0;  // Debug ADC
+
+	    TRISFbits.TRISF4 = 1;  // Filtro y no filtro
+
+	    TRISFbits.TRISF5 = 0;  // Led indicador de filtro aplicado
 	}
 
 	void main()  {
@@ -241,27 +295,13 @@ Programación de filtros
 	    configTIMER2();
 	    configADC();
 
-	    AD1CON1bits.ADON = 1;
+	    ADCON1bits.ADON = 1;
 
 	    T2CONbits.TON=1;
 
 	    while(1)  {
 	    }
 	}
-
-**Ejercicio 3:** 
-
-- Programar esto y controlar en Proteus. 
-- Analizar si la frecuencia de muestreo es la misma con el ADC encendido y apagado. Es decir, realizando el procesamiento de la señal o no.
-
-**Ejercicio 4:** 
-
-- Intentar utilizar el código que genera el Filter Designer Tool del mikroC. 
-
-
-
-	
-
 
 
 
