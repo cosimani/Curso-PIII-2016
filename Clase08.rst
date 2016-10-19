@@ -21,30 +21,29 @@ Clase 08 - PIII 2016
 	//     Filter kind: FIR
 	//     Filter type: Lowpass filter
 	//     Filter order: 30
-	//     Filter window: Rectangular
+	//     Filter window: Hamming
 	//     Filter borders:
 	//       Wpass:30 Hz
 	const unsigned BUFFFER_SIZE  = 32;
 	const unsigned FILTER_ORDER  = 30;
 
 	const unsigned COEFF_B[FILTER_ORDER+1] = {
-	    0x01AE, 0x02CE, 0x03FF, 0x053B, 0x067E, 0x07C0,
-	    0x08FC, 0x0A2A, 0x0B46, 0x0C4A, 0x0D2F, 0x0DF2,
-	    0x0E8E, 0x0F00, 0x0F45, 0x0F5C, 0x0F45, 0x0F00,
-	    0x0E8E, 0x0DF2, 0x0D2F, 0x0C4A, 0x0B46, 0x0A2A,
-	    0x08FC, 0x07C0, 0x067E, 0x053B, 0x03FF, 0x02CE,
-	    0x01AE};
+	    0x0022, 0x0041, 0x007B, 0x00E1, 0x0182, 0x0267,
+	    0x0393, 0x0500, 0x06A1, 0x0862, 0x0A27, 0x0BD3,
+	    0x0D47, 0x0E67, 0x0F1E, 0x0F5C, 0x0F1E, 0x0E67,
+	    0x0D47, 0x0BD3, 0x0A27, 0x0862, 0x06A1, 0x0500,
+	    0x0393, 0x0267, 0x0182, 0x00E1, 0x007B, 0x0041,
+	    0x0022};
 
 	unsigned inext;                       // Input buffer index
 	ydata unsigned input[BUFFFER_SIZE];   // Input buffer, must be in Y data space
 
 	void config_adc()  {
-	    ADPCFG = 0xFFF7; // La entrada analogica es el AN3 (pin 5)
+	    ADPCFG = 0xFFF7; // La entrada analogica es el AN3
 	    // Con cero se indica entrada analogica y con 1 sigue siendo entrada digital.
 
 	    AD1CON1bits.ADON = 0;  // ADC apagado por ahora
 	    AD1CON1bits.AD12B = 0;  // ADC de 10 bits
-	    AD1CON1bits.FORM = 0b00;  // Formato de salida entero
 
 	    // Tomar muestras en forma manual, porque lo vamos a controlar con el Timer 2
 	    AD1CON1bits.SSRC = 0b000;
@@ -52,13 +51,13 @@ Clase 08 - PIII 2016
 	    // Adquiere muestra cuando el SAMP se pone en 1. SAMP lo controlamos desde el Timer 2
 	    AD1CON1bits.ASAM = 0;
 
-	    AD1CON2bits.VCFG = 0b011;  // Referencia con fuente externa VRef+ y VRef-
-	    AD1CON2bits.SMPI = 0b0000;  // Lanza interrupción luego de tomar n muestras.
+	    AD1CON2bits.VCFG = 0b000;  // Referencia desde la fuente de alimentación
+        AD1CON2bits.SMPI = 0b0000;  // Lanza interrupción luego de tomar n muestras.
 	    // Con SMPI=0b0000 -> 1 muestra ; Con SMPI=0b0001 -> 2 muestras ; Con SMPI=0b0010 -> 3 muestras ; etc.
 
 	    // AD1CON3 no se usa ya que usamos muestreo manual
 
-	    // Muestreo la entrada analogica AN3 contra el nivel de VRef+ y VRef-
+	    // Muestreo la entrada analogica AN3
 	    AD1CHS0 = 0b00011;
 	}
 
@@ -77,10 +76,9 @@ Clase 08 - PIII 2016
 	}
 
 	void config_ports()  {
-	    TRISAbits.TRISA3 = 1;  // Entrada para muestrear = AN3
+	    TRISBbits.TRISB1 = 1;  // Entrada para muestrear = AN3
 
-	    // Elegimos los puertos RB2-RB11 para la salida digital
-	    TRISBbits.TRISB2 = 0;  // Menos significativo
+	    TRISBbits.TRISB2 = 0;
 	    TRISBbits.TRISB3 = 0;
 	    TRISBbits.TRISB4 = 0;
 	    TRISBbits.TRISB5 = 0;
@@ -89,18 +87,18 @@ Clase 08 - PIII 2016
 	    TRISBbits.TRISB8 = 0;
 	    TRISBbits.TRISB9 = 0;
 	    TRISBbits.TRISB10 = 0;
-	    TRISBbits.TRISB11 = 0;  // Mas significativo
+	    TRISBbits.TRISB11 = 0;
 
 	    TRISBbits.TRISB0 = 1;  // Para control del filtro
 
-	    TRISBbits.TRISB13 = 0;  // Debug T2
-	    TRISBbits.TRISB14 = 0;  // Debug ADC
+	    TRISBbits.TRISB13 = 0;  // Debug ADC
+	    TRISBbits.TRISB14 = 0;  // Debug T2
 	}
 
 	void detect_timer2() org 0x0022  {
 	    IFS0bits.T2IF=0;  // Borramos la bandera de interrupción Timer 2
 
-	    LATBbits.LATB13 = !LATBbits.LATB13;  // Para debug de la interrupcion Timer 2
+	    LATBbits.LATB14 = !LATBbits.LATB14;  // Para debug de la interrupcion Timer 2
 
 	    AD1CON1bits.DONE = 0;  // Antes de pedir una muestra ponemos en cero
 	    AD1CON1bits.SAMP = 1;  // Pedimos una muestra
@@ -114,42 +112,41 @@ Clase 08 - PIII 2016
 	    unsigned CurrentValue;
 
 	    IFS0bits.AD1IF = 0; // Borramos el flag de interrupciones del ADC
-	    LATBbits.LATB14 = !LATBbits.LATB14;  // Para debug de la interrupcion ADC
+	    LATBbits.LATB13 = !LATBbits.LATB13;  // Para debug de la interrupcion ADC
 
 	    if(PORTBbits.RB0 == 1)  {
 	        input[inext] = ADCBUF0;                 // Fetch sample
 
-	        CurrentValue = FIR_Radix(FILTER_ORDER+1,// Filter order
-	                                 COEFF_B,      // b coefficients of the filter
-	                                 BUFFFER_SIZE, // Input buffer length
-	                                 input,        // Input buffer
-	                                 inext);       // Current sample
+	        CurrentValue = FIR_Radix(FILTER_ORDER+1,  // Filter order
+		                             COEFF_B,         // b coefficients of the filter
+		                             BUFFFER_SIZE,    // Input buffer length
+		                             input,           // Input buffer
+		                             inext);          // Current sample
 
 	        inext = (inext+1) & (BUFFFER_SIZE-1);   // inext = (inext + 1) mod BUFFFER_SIZE;
 
-	        LATBbits.LATB11 =   ((unsigned int)CurrentValue & 0b0000001000000000) >> 9;
-	        LATBbits.LATB10 =   ((unsigned int)CurrentValue & 0b0000000100000000) >> 8;
-	        LATBbits.LATB9 =  ((unsigned int)CurrentValue &  0b0000000010000000) >> 7;
-	        LATBbits.LATB8 =  ((unsigned int)CurrentValue &  0b0000000001000000) >> 6;
-	        LATBbits.LATB7 =  ((unsigned int)CurrentValue &  0b0000000000100000) >> 5;
-	        LATBbits.LATB6 =  ((unsigned int)CurrentValue &  0b0000000000010000) >> 4;
-	        LATBbits.LATB5 = ((unsigned int)CurrentValue &  0b0000000000001000) >> 3;
-	        LATBbits.LATB4 = ((unsigned int)CurrentValue &  0b0000000000000100) >> 2;
-	        LATBbits.LATB3 = ((unsigned int)CurrentValue &  0b0000000000000010) >> 1;
-	        LATBbits.LATB2 = ((unsigned int)CurrentValue &  0b0000000000000001) >> 0;
+	        LATBbits.LATB11 =  ((unsigned int)CurrentValue & 0b0000001000000000) >> 9;
+	        LATBbits.LATB10 =  ((unsigned int)CurrentValue & 0b0000000100000000) >> 8;
+	        LATBbits.LATB9 =  ((unsigned int)CurrentValue & 0b0000000010000000) >> 7;
+	        LATBbits.LATB8 =  ((unsigned int)CurrentValue & 0b0000000001000000) >> 6;
+	        LATBbits.LATB7 =  ((unsigned int)CurrentValue & 0b0000000000100000) >> 5;
+	        LATBbits.LATB6 =  ((unsigned int)CurrentValue & 0b0000000000010000) >> 4;
+	        LATBbits.LATB5 = ((unsigned int)CurrentValue & 0b0000000000001000) >> 3;
+	        LATBbits.LATB4 = ((unsigned int)CurrentValue & 0b0000000000000100) >> 2;
+	        LATBbits.LATB3 = ((unsigned int)CurrentValue & 0b0000000000000010) >> 1;
+	        LATBbits.LATB2 = ((unsigned int)CurrentValue & 0b0000000000000001) >> 0;
 	    }
 	    else  {
-	        // Almacenamos los 10 bits del ADC
-	        LATBbits.LATB2 = ADCBUF0.B0;
-	        LATBbits.LATB3 = ADCBUF0.B1;
-	        LATBbits.LATB4 = ADCBUF0.B2;
+	        LATBbits.LATB11  = ADCBUF0.B9;
+	        LATBbits.LATB10  = ADCBUF0.B8;
+	        LATBbits.LATB9  = ADCBUF0.B7;
+	        LATBbits.LATB8  = ADCBUF0.B6;
+	        LATBbits.LATB7  = ADCBUF0.B5;
+	        LATBbits.LATB6  = ADCBUF0.B4;
 	        LATBbits.LATB5 = ADCBUF0.B3;
-	        LATBbits.LATB6 = ADCBUF0.B4;
-	        LATBbits.LATB7 = ADCBUF0.B5;
-	        LATBbits.LATB8 = ADCBUF0.B6;
-	        LATBbits.LATB9 = ADCBUF0.B7;
-	        LATBbits.LATB10 = ADCBUF0.B8;
-	        LATBbits.LATB11 = ADCBUF0.B9;
+	        LATBbits.LATB4 = ADCBUF0.B2;
+	        LATBbits.LATB3 = ADCBUF0.B1;
+	        LATBbits.LATB2 = ADCBUF0.B0;
 	    }
 	}
 
