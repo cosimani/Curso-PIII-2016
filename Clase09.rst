@@ -8,7 +8,7 @@ Clase 09 - PIII 2016
 Manualidades electrónicas
 =========================
 
-Con la finalidad de probar los proyectos en la placa y que el armado sea más rápido, se pide traer separar un poco las tareas y traer lo siguiente:
+Con la finalidad de probar los proyectos en la placa y que el armado sea más rápido, separamos un poco las tareas y traermos lo siguiente:
 
 - Para el día: 2 de noviembre
 
