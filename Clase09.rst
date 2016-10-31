@@ -22,6 +22,7 @@ Con la finalidad de probar los proyectos en la placa y que el armado sea más r�
 - Fichitas para esos pines
 - Las resistencias para DAC R-2R de 10 bits
 - Plaqueta multipropósito de cobre, aprox. 10x10 cm
+- Cables
 
 **Variaciones por grupo:**
 
