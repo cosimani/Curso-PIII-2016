@@ -256,6 +256,10 @@ Clase 10 - PIII 2016
 
 - Que la salida en los puertos RB muestre directamente la frecuencia y no la componente k.
 
+** Ejemplo: FFT de entrada en AN8 y envío de datos a través de UART**
+
+- `Descargar desde aquí <https://github.com/cosimani/Curso-PIII-2016/blob/master/resources/clase10/FFTyUART.rar?raw=true>`_
+
 
 
 
