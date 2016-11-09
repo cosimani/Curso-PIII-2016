@@ -8,29 +8,16 @@ Clase 11 - PIII 2016
 Grabación de dsPIC con Pickit 3
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- Descargamos aplicativo desde: http://www.microchip.com/pagehandler/en-us/devtools/dev-tools-parts.html
+- El Pickit 3 permite programar el dsPIC grabando el archivo .hex compilado con el mikroC
+- Requiere el aplicativo programador. Descargarlo desde http://www.microchip.com/pagehandler/en-us/devtools/dev-tools-parts.html
 
-.. figure:: images/clase10/im1.png
-
-- Instalamos el aplicativo:
-
-.. figure:: images/clase10/im2.png
+.. figure:: images/clase10/pickit3_1.png
 
 - Conectar el Pickit 3 a la PC y esperar que instale controladores (la instalación del aplicativo instala los controladores también).
-
-- Como hubo problemas para hacerlo funcionar. Descargamos también: PICkit 3 Programmer App and Scripting Tool v3.10 ( http://ww1.microchip.com/downloads/en/DeviceDoc/PICkit3%20Programmer%20Application%20v3.10.zip )
-
-.. figure:: images/clase10/im3.png
 
 - Para abrirlo ejecutamos:
 
 .. figure:: images/clase10/im4.png
-
-- Este sí funciona, pero requiere instalar un Firmware distinto al PicKit 3. El firmware que se cargó en el PicKit fue:
-
-.. figure:: images/clase10/im5.png
-
-(Sin embargo ya fue instalado este Firmware en los dos PicKit 3 de la UBP)
 
 - Podemos probar conectando la Demo board que viene con el PicKit 3 ( más info en: http://ww1.microchip.com/downloads/en/DeviceDoc/41296B.pdf )
 
@@ -43,10 +30,6 @@ Grabación de dsPIC con Pickit 3
 .. figure:: images/clase10/im7.png
 
 - Se puede leer el dsPIC y grabar el firmware en un .hex y también se puede escribir nuestro .hex creado con mikroC.
-
-- Abrir mikroC para PIC ( no dsPIC ), crear un proyecto para PIC18F45K20 y grabarlo.
-
-- Video sobre cómo utilizar el generador de señal (https://www.youtube.com/watch?v=qCRcNYbqBxs)
 
 **Ejercicio 1:**
 
