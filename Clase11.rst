@@ -11,7 +11,7 @@ Grabación de dsPIC con Pickit 3
 - El Pickit 3 permite programar el dsPIC grabando el archivo .hex compilado con el mikroC
 - Requiere el aplicativo programador. Descargarlo desde http://www.microchip.com/pagehandler/en-us/devtools/dev-tools-parts.html
 
-.. figure:: images/clase10/pickit3_1.png
+.. figure:: images/clase11/pickit3_1.png
 
 - Conectar el Pickit 3 a la PC y esperar que instale controladores (la instalación del aplicativo instala los controladores también).
 
